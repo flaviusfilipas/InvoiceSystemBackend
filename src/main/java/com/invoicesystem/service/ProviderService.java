@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public class ProviderService {
 
-    private ProviderRepository providerRepository;
+    private final ProviderRepository providerRepository;
 
     public ProviderService(ProviderRepository providerRepository){
         this.providerRepository = providerRepository;
@@ -19,10 +19,9 @@ public class ProviderService {
         return providerRepository.save(provider);
     }
 
-    public Provider findOne(Long id){
+    public Provider findOne(Integer id){
         return providerRepository.getOne(id);
     }
-
 
     public List<Provider> findAll(){
         return providerRepository.findAll();

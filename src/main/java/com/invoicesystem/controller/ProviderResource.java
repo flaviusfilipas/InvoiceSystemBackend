@@ -4,10 +4,8 @@ import com.invoicesystem.domain.Provider;
 import com.invoicesystem.service.ProviderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,5 +25,13 @@ public class ProviderResource {
         log.info("REST request to find all providers");
         List<Provider> all = providerService.findAll();
         return ResponseEntity.ok(all);
+    }
+
+    @GetMapping("/provider/{id}")
+    @Secured("ADMIN")
+    public ResponseEntity<Provider> findOneById(@PathVariable Integer id) {
+        log.info("REST request to find all providers");
+        Provider provider = providerService.findOne(id);
+        return ResponseEntity.ok(provider);
     }
 }

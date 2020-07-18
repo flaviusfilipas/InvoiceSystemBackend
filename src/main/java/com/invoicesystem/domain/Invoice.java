@@ -23,7 +23,7 @@ public class Invoice {
     @Column(name = "vat_value")
     private Double vatValue;
     @ManyToOne
-    private ProviderService providerService;
+    private ProviderServiceName providerService;
     @OneToOne
     private ExpeditionData expeditionData;
 }

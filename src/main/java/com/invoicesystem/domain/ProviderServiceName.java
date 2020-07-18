@@ -5,9 +5,9 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Data
-@Table(name="provider_service")
+@Table(name="provider_service_name")
 @Entity
-public class ProviderService {
+public class ProviderServiceName {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;

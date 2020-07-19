@@ -1,12 +1,15 @@
 package com.invoicesystem.controller;
 
 import com.invoicesystem.domain.Provider;
+import com.invoicesystem.dto.ProviderDTO;
 import com.invoicesystem.service.ProviderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @Slf4j
@@ -18,6 +21,28 @@ public class ProviderResource {
 
     public ProviderResource(ProviderService providerService) {
         this.providerService = providerService;
+    }
+
+    @PostMapping("/provider")
+    public ResponseEntity<ProviderDTO> createProvider(@RequestBody ProviderDTO providerDTO) throws URISyntaxException {
+        if (providerDTO.getId() != null) {
+            return ResponseEntity.badRequest()
+                    .build();
+        }
+        ProviderDTO savedProvider = providerService.save(providerDTO);
+        return ResponseEntity.created(new URI("/api/v1/provider/ " + savedProvider.getId()))
+                .build();
+    }
+
+    @PutMapping("/provider")
+    public ResponseEntity<ProviderDTO> updateProvider(@RequestBody ProviderDTO providerDTO) {
+        if (providerDTO.getId() == null) {
+            return ResponseEntity.badRequest()
+                    .build();
+        }
+
+        ProviderDTO savedProvider = providerService.save(providerDTO);
+        return ResponseEntity.ok(savedProvider);
     }
 
     @GetMapping("/provider/all")

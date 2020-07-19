@@ -19,4 +19,7 @@ public class Provider extends Identity {
     private String cssvn;
     @Column(name = "vat_percent")
     private Integer vatPercent;
+    @OneToOne
+    private User user;
+
 }

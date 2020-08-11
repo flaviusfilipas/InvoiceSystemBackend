@@ -14,7 +14,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/provider")
 @CrossOrigin
 public class ProviderResource {
     private ProviderService providerService;
@@ -23,7 +23,7 @@ public class ProviderResource {
         this.providerService = providerService;
     }
 
-    @PostMapping("/provider")
+    @PostMapping
     public ResponseEntity<ProviderDTO> createProvider(@RequestBody ProviderDTO providerDTO) throws URISyntaxException {
         if (providerDTO.getId() != null) {
             return ResponseEntity.badRequest()
@@ -34,26 +34,33 @@ public class ProviderResource {
                 .build();
     }
 
-    @PutMapping("/provider")
+    @PutMapping
     public ResponseEntity<ProviderDTO> updateProvider(@RequestBody ProviderDTO providerDTO) {
         if (providerDTO.getId() == null) {
             return ResponseEntity.badRequest()
                     .build();
         }
-
         ProviderDTO savedProvider = providerService.save(providerDTO);
         return ResponseEntity.ok(savedProvider);
     }
 
-    @GetMapping("/provider/all")
+    @GetMapping("/all")
     public ResponseEntity<List<Provider>> findAll() {
         log.info("REST request to find all providers");
         List<Provider> all = providerService.findAll();
         return ResponseEntity.ok(all);
     }
 
-    @GetMapping("/provider/{id}")
-    @Secured("ADMIN")
+    @GetMapping("/admin/all")
+    @Secured("ROLE_ADMIN")
+    public ResponseEntity<List<Provider>> findAdminAll() {
+        log.info("REST request to find all providers");
+        List<Provider> all = providerService.findAll();
+        return ResponseEntity.ok(all);
+    }
+
+
+    @GetMapping("/{id}")
     public ResponseEntity<Provider> findOneById(@PathVariable Integer id) {
         log.info("REST request to find all providers");
         Provider provider = providerService.findOne(id);
